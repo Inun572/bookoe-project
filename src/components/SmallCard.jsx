@@ -15,7 +15,7 @@ const SmallCard = (props) => {
         />
       </div>
       <h1 className="h-[70px] text-2xl font-semibold line-clamp-2">{title}</h1>
-      <p className="text-xl pb-2 h-auto truncate">by {author.name}</p>
+      <p className="text-xl pb-2 h-auto truncate">by {author?.name}</p>
       <Star rating={rating} style={'scale-50'} />
       <Link className="mt-2" to={`/books/${id}`}>
         <Button text="Read Book" />

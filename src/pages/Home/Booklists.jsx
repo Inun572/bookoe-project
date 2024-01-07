@@ -3,14 +3,14 @@ import BigCard from '../../components/BigCard';
 import SmallCard from '../../components/SmallCard';
 import useGetData from '../../hooks/useGetData';
 
-const BASE_URL_API_BOOKS = 'https://bookapi.cm.hmw.lol/api';
+const BASE_URL_API_BOOKS = 'https://bookapi.cm.hmw.lol/api/books';
 const totalPage = 100;
 
 const Booklists = () => {
   const page = Math.ceil(Math.random() * totalPage);
 
   const { data, error, isLoading } = useGetData(
-    `${BASE_URL_API_BOOKS}/books?page=${page}`
+    `${BASE_URL_API_BOOKS}?page=${page}`
   );
 
   if (error) {
