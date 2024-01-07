@@ -2,7 +2,7 @@ import Facebook from '../../assets/icon/Facebook.svg';
 import Twitter from '../../assets/icon/Twitter.svg';
 import Instagram from '../../assets/icon/Instagram.svg';
 import LinkedIn from '../../assets/icon/LinkedIn.svg';
-import Youtube from '../../assets/icon/Youtube.svg';
+import Youtube from '../../assets/icon/YouTube.svg';
 import Logo from './Logo';
 
 const Footer = () => {
