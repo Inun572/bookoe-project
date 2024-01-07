@@ -1,7 +1,9 @@
 import { NavLink, useLocation, useNavigate } from 'react-router-dom';
 import Logo from './Logo';
+import PropTypes from 'prop-types';
 import { useSearch } from '../../store/store';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import Button from '../common/Button';
 
 const routes = [
   {
@@ -18,15 +20,24 @@ const routes = [
   },
 ];
 
-const Navbar = () => {
+const Navbar = ({ scrolled }) => {
   const [search, setSearch] = useState('');
+  const [warning, setWarning] = useState(false);
   const setKeyword = useSearch((state) => state.setKeyword);
 
   const location = useLocation();
   const navigate = useNavigate();
 
+  useEffect(() => {
+    if (search.split('').length < 3 && search !== '') {
+      setWarning(true);
+    } else {
+      setWarning(false);
+    }
+  }, [search]);
+
   const onSearchHandle = (e) => {
-    if (e.target.value === '') {
+    if (warning) {
       return;
     }
 
@@ -36,9 +47,13 @@ const Navbar = () => {
     }
   };
   return (
-    <header className="flex justify-between items-center my-[33px]">
+    <header
+      className={`fixed z-10 top-0 left-0 px-[100px] w-screen flex justify-between items-center py-[33px] isolate transition-all duration-300 ${
+        scrolled ? 'bg-white shadow-md' : ''
+      }`}
+    >
       <Logo />
-      <div className="flex justify-between items-center">
+      <nav className="flex justify-between items-center">
         <div className="min-w-[226px] flex justify-between items-center gap-6 text-xl">
           {routes.map((route, index) => (
             <NavLink
@@ -75,13 +90,20 @@ const Navbar = () => {
             placeholder="Search by title or authors..."
             className="min-w-[402px] h-[50px] py-[10px] pl-14 pr-4 ml-9 mr-4 rounded-lg ring-1 ring-[#DDD] placeholder:font-light placeholder:text-light-gray placeholder:text-xl outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-accent"
           />
+          {warning && (
+            <p className="absolute -bottom-8 right-6 text-red-500 text-sm">
+              Enter 3 or more characters
+            </p>
+          )}
         </div>
-        <button className="text-accent font-medium text-xl w-full border border-accent rounded-lg px-[30px] py-[10px] hover:text-white hover:bg-accent">
-          Edit List
-        </button>
-      </div>
+        <Button text="Edit list" style={{ padding: '10px 20px' }} />
+      </nav>
     </header>
   );
+};
+
+Navbar.propTypes = {
+  scrolled: PropTypes.bool,
 };
 
 export default Navbar;
