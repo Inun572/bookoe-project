@@ -1,7 +1,7 @@
 import { NavLink, useLocation, useNavigate } from 'react-router-dom';
 import Logo from './Logo';
 import PropTypes from 'prop-types';
-import { useSearch } from '../../store/store';
+import { useSearch } from '../../store/search';
 import { useEffect, useState } from 'react';
 import Button from '../common/Button';
 
