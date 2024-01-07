@@ -8,7 +8,7 @@ const Star = ({ rating, style }) => {
 
 Star.propTypes = {
   rating: PropTypes.number,
-  style: PropTypes.text,
+  style: PropTypes.string,
 };
 
 export default Star;

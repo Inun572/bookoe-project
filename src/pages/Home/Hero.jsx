@@ -10,7 +10,7 @@ const Hero = () => {
   }, []);
 
   const fetchData = async () => {
-    const page = Math.floor(Math.random() * 50);
+    const page = Math.ceil(Math.random() * 50);
     const response = await fetch(
       `https://bookapi.cm.hmw.lol/api/books?is_top_pick=true&page=${page}&sort=rating&direction=desc`,
       {
@@ -24,6 +24,16 @@ const Hero = () => {
     setBooks(top3);
   };
 
+  // const chooseBook = (id) => {
+  //   const index = books.findIndex((book) => book.id === Number(id));
+  //   console.log(index);
+  //   setBooks((prev) => {
+  //     const firstBook = prev.slice(index, index + 1);
+  //     return [prev.splice(0, 1, ...firstBook)];
+  //   });
+  //   console.log(books);
+  // };
+
   if (books.length < 1) {
     return (
       <div className="w-full min-h-screen flex justify-center items-center">
@@ -32,7 +42,7 @@ const Hero = () => {
     );
   }
   return (
-    <div className="w-full px-[76px] py-[66px] bg-hero rounded-lg flex justify-center items-center">
+    <section className="w-full px-[76px] py-[66px] bg-hero rounded-lg flex justify-center items-center">
       <div className="w-1/2 h-full flex flex-col items-start justify-start">
         <p className="text-xl font-semibold text-accent">MUST READ</p>
         <h1 className="text-[62px] leading-[72px] mb-4 font-semibold line-clamp-2">
@@ -40,7 +50,7 @@ const Hero = () => {
         </h1>
         <div className="flex justify-center items-center mb-8">
           <p className="font-medium max-w-[200px] truncate">
-            {books[0].author.name}
+            {books[0].author?.name}
           </p>
           <Star rating={books[0].rating} style={'scale-[80%]'} />
         </div>
@@ -76,22 +86,28 @@ const Hero = () => {
       </div>
       <div className="w-1/2 relative flex justify-center items-center">
         <img
+          // onClick={(e) => chooseBook(e.target.id)}
+          id={books[2].id}
           src={books[2].image_url}
           alt={books[2].title}
-          className="w-[280px] h-[390px] absolute rounded-lg translate-x-[200px] scale-[80%] transition-transform duration-300  hover:z-10 hover:scale-[100%] hover:translate-x-0"
+          className="w-[280px] h-[390px] absolute rounded-lg translate-x-[200px] scale-[80%] transition-transform duration-300 hover:origin-bottom-right hover:-translate-y-5 hover:rotate-12"
         />
         <img
+          // onClick={(e) => chooseBook(e.target.id)}
+          id={books[1].id}
           src={books[1].image_url}
           alt={books[1].title}
-          className="w-[280px] h-[390px] absolute rounded-lg translate-x-[100px] scale-[90%] transition-transform duration-300  hover:z-10 hover:scale-[100%] hover:translate-x-0"
+          className="w-[280px] h-[390px] absolute rounded-lg translate-x-[100px] scale-[90%] transition-transform duration-300 hover:origin-bottom-right hover:-translate-y-5 hover:rotate-12"
         />
         <img
+          // onClick={(e) => chooseBook(e.target.id)}
+          id={books[0].id}
           src={books[0].image_url}
           alt={books[0].title}
           className="w-[280px] h-[390px] absolute rounded-lg"
         />
       </div>
-    </div>
+    </section>
   );
 };
 

@@ -1,29 +1,27 @@
-import { useState, useEffect } from 'react';
+// import { useState, useEffect } from 'react';
 import BigCard from '../../components/BigCard';
 import SmallCard from '../../components/SmallCard';
+import useGetData from '../../hooks/useGetData';
+
+const BASE_URL_API_BOOKS = 'https://bookapi.cm.hmw.lol/api';
+const totalPage = 100;
 
 const Booklists = () => {
-  const [books, setBooks] = useState([]);
+  const page = Math.ceil(Math.random() * totalPage);
 
-  useEffect(() => {
-    fetchData();
-  }, []);
+  const { data, error, isLoading } = useGetData(
+    `${BASE_URL_API_BOOKS}/books?page=${page}`
+  );
 
-  const fetchData = async () => {
-    const page = Math.floor(Math.random() * 100);
-    const response = await fetch(
-      `https://bookapi.cm.hmw.lol/api/books?page=${page}`,
-      {
-        headers: {
-          Accept: 'application/json',
-        },
-      }
+  if (error) {
+    return (
+      <div className="w-full min-h-screen flex justify-center items-center">
+        <div className="text-3xl font-semibold">{error.message}</div>
+      </div>
     );
-    const results = await response.json();
-    setBooks(results.data);
-  };
+  }
 
-  if (books.length < 1) {
+  if (isLoading) {
     return (
       <div className="w-full min-h-screen flex justify-center items-center">
         <div className="text-3xl font-semibold">Loading...</div>
@@ -31,10 +29,13 @@ const Booklists = () => {
     );
   }
 
+  const heroBooks = data?.data.slice(0, 4);
+  const books = data?.data.slice(4);
+
   return (
     <div className="w-full my-[33px]">
       <div className="w-full flex flex-wrap justify-between gap-x-[144px] gap-y-[92px] mb-[113px]">
-        {books.slice(0, 4).map((book) => {
+        {heroBooks.map((book) => {
           return (
             <BigCard
               key={book.id}
@@ -49,7 +50,7 @@ const Booklists = () => {
         })}
       </div>
       <div className="w-full flex flex-wrap justify-evenly gap-x-[67px] gap-y-[33px]">
-        {books.slice(5).map((book) => {
+        {books.map((book) => {
           return <SmallCard key={book.id} {...book} />;
         })}
       </div>
