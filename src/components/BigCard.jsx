@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import Star from './common/Star';
+import Button from './common/Button';
 
 const BigCard = ({ title, author, description, rating, cover, id }) => {
   return (
@@ -21,9 +22,7 @@ const BigCard = ({ title, author, description, rating, cover, id }) => {
         </div>
         <p className="h-[100px] line-clamp-4 mb-[30px]">{description}</p>
         <Link className="mt-4" to={`/books/${id}`}>
-          <button className="text-accent font-medium text-xl w-full border border-accent rounded-lg py-[10px] px-auto hover:text-white hover:bg-accent">
-            Read Book
-          </button>
+          <Button text="Read Book" />
         </Link>
       </div>
     </div>

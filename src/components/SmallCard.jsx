@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import Star from './common/Star';
+import Button from './common/Button';
 
 const SmallCard = (props) => {
   const { title, author, rating, image_url, id } = props;
@@ -17,9 +18,7 @@ const SmallCard = (props) => {
       <p className="text-xl pb-2 h-auto truncate">by {author.name}</p>
       <Star rating={rating} style={'scale-50'} />
       <Link className="mt-2" to={`/books/${id}`}>
-        <button className="text-accent font-medium text-xl w-full border border-accent rounded-lg py-[10px] px-auto hover:text-white hover:bg-accent">
-          Read Book
-        </button>
+        <Button text="Read Book" />
       </Link>
     </div>
   );
