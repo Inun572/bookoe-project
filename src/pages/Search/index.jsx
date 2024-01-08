@@ -1,6 +1,7 @@
 import SmallCard from '../../components/SmallCard';
 import { useParams } from 'react-router-dom';
 import useGetData from '../../hooks/useGetData';
+import SkeletonPage from '../../components/skeletons/SkeletonPage';
 
 const BASE_URL_API_BOOKS = 'https://bookapi.cm.hmw.lol/api/books';
 
@@ -22,11 +23,7 @@ const Index = () => {
   }
 
   if (isLoading) {
-    return (
-      <div className="w-full min-h-screen flex justify-center items-center">
-        <div className="text-3xl font-semibold">Loading...</div>
-      </div>
-    );
+    return <SkeletonPage />;
   }
 
   const searchResult = books.data;

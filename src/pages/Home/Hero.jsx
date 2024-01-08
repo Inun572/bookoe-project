@@ -1,46 +1,32 @@
-import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import Star from '../../components/common/Star';
+import useGetData from '../../hooks/useGetData';
+import HeroSkeleton from '../../components/skeletons/HeroSkeleton';
+
+const BASE_URL_API_BOOKS = 'https://bookapi.cm.hmw.lol/api/books';
+const totalPage = 50;
 
 const Hero = () => {
-  const [books, setBooks] = useState([]);
+  const page = Math.ceil(Math.random() * totalPage);
 
-  useEffect(() => {
-    fetchData();
-  }, []);
+  const { data, error, isLoading } = useGetData(
+    `${BASE_URL_API_BOOKS}?is_top_pick=true&page=${page}&sort=rating&direction=desc`
+  );
 
-  const fetchData = async () => {
-    const page = Math.ceil(Math.random() * 50);
-    const response = await fetch(
-      `https://bookapi.cm.hmw.lol/api/books?is_top_pick=true&page=${page}&sort=rating&direction=desc`,
-      {
-        headers: {
-          Accept: 'application/json',
-        },
-      }
-    );
-    const results = await response.json();
-    const top3 = results.data.slice(0, 3);
-    setBooks(top3);
-  };
+  const books = data?.data.slice(0, 3);
 
-  // const chooseBook = (id) => {
-  //   const index = books.findIndex((book) => book.id === Number(id));
-  //   console.log(index);
-  //   setBooks((prev) => {
-  //     const firstBook = prev.slice(index, index + 1);
-  //     return [prev.splice(0, 1, ...firstBook)];
-  //   });
-  //   console.log(books);
-  // };
-
-  if (books.length < 1) {
+  if (error) {
     return (
       <div className="w-full min-h-screen flex justify-center items-center">
-        <div className="text-3xl font-semibold">Loading...</div>
+        <div className="text-3xl font-semibold">{error.message}</div>
       </div>
     );
   }
+
+  if (isLoading) {
+    return <HeroSkeleton />;
+  }
+
   return (
     <section className="w-full px-[76px] py-[66px] bg-hero rounded-lg flex justify-center items-center">
       <div className="w-1/2 h-full flex flex-col items-start justify-start">
@@ -86,21 +72,18 @@ const Hero = () => {
       </div>
       <div className="w-1/2 relative flex justify-center items-center">
         <img
-          // onClick={(e) => chooseBook(e.target.id)}
           id={books[2].id}
           src={books[2].image_url}
           alt={books[2].title}
           className="w-[280px] h-[390px] absolute rounded-lg translate-x-[200px] scale-[80%] transition-transform duration-300 hover:origin-bottom-right hover:-translate-y-5 hover:rotate-12"
         />
         <img
-          // onClick={(e) => chooseBook(e.target.id)}
           id={books[1].id}
           src={books[1].image_url}
           alt={books[1].title}
           className="w-[280px] h-[390px] absolute rounded-lg translate-x-[100px] scale-[90%] transition-transform duration-300 hover:origin-bottom-right hover:-translate-y-5 hover:rotate-12"
         />
         <img
-          // onClick={(e) => chooseBook(e.target.id)}
           id={books[0].id}
           src={books[0].image_url}
           alt={books[0].title}

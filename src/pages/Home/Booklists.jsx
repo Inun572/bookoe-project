@@ -1,6 +1,7 @@
 // import { useState, useEffect } from 'react';
 import BigCard from '../../components/BigCard';
 import SmallCard from '../../components/SmallCard';
+import BooklistSkeleton from '../../components/skeletons/BooklistSkeleton';
 import useGetData from '../../hooks/useGetData';
 
 const BASE_URL_API_BOOKS = 'https://bookapi.cm.hmw.lol/api/books';
@@ -22,18 +23,14 @@ const Booklists = () => {
   }
 
   if (isLoading) {
-    return (
-      <div className="w-full min-h-screen flex justify-center items-center">
-        <div className="text-3xl font-semibold">Loading...</div>
-      </div>
-    );
+    return <BooklistSkeleton />;
   }
 
   const heroBooks = data?.data.slice(0, 4);
   const books = data?.data.slice(4);
 
   return (
-    <div className="w-full my-[33px]">
+    <section className="w-full my-[33px]">
       <div className="w-full flex flex-wrap justify-between gap-x-[144px] gap-y-[92px] mb-[113px]">
         {heroBooks.map((book) => {
           return (
@@ -54,7 +51,7 @@ const Booklists = () => {
           return <SmallCard key={book.id} {...book} />;
         })}
       </div>
-    </div>
+    </section>
   );
 };
 

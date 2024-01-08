@@ -1,40 +1,32 @@
-import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import Star from '../../components/common/Star';
 import { dateFormatter } from '../../utils/formatter';
+import useGetData from '../../hooks/useGetData';
+import BookDetailSkeleton from '../../components/skeletons/BookDetailSkeleton';
 
+const BASE_URL_API_BOOKS = 'https://bookapi.cm.hmw.lol/api/books';
 const BookDetails = () => {
   const bookId = useParams().bookId;
-  const [book, setBook] = useState({});
+  const {
+    data: book,
+    error,
+    isLoading,
+  } = useGetData(`${BASE_URL_API_BOOKS}/${bookId}`);
 
-  useEffect(() => {
-    fetchData();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-  const fetchData = async () => {
-    const response = await fetch(
-      `https://bookapi.cm.hmw.lol/api/books/${bookId}`,
-      {
-        headers: {
-          Accept: 'application/json',
-        },
-      }
-    );
-    const result = await response.json();
-    setBook(result);
-  };
-
-  if (!book) {
+  if (error) {
     return (
       <div className="w-full min-h-screen flex justify-center items-center">
-        <div className="text-3xl font-semibold">Loading...</div>
+        <div className="text-3xl font-semibold">{error.message}</div>
       </div>
     );
   }
 
+  if (isLoading) {
+    return <BookDetailSkeleton />;
+  }
+
   return (
-    <div className="w-full flex justify-between gap-[76px]">
+    <section className="w-full flex justify-between gap-[76px]">
       <img
         src={book.image_url}
         alt={book.title}
@@ -55,7 +47,7 @@ const BookDetails = () => {
           {dateFormatter(book.created_at, 'en-US', { dateStyle: 'long' })}
         </p>
       </div>
-    </div>
+    </section>
   );
 };
 

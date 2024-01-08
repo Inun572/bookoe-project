@@ -2,6 +2,7 @@ import { useState } from 'react';
 import SmallCard from '../../components/SmallCard';
 import CardWithTag from '../../components/CardWithTag';
 import useGetData from '../../hooks/useGetData';
+import SkeletonPage from '../../components/skeletons/SkeletonPage';
 
 const ratingTag = (tag) => {
   return (
@@ -27,11 +28,7 @@ const Index = () => {
   }
 
   if (isLoading) {
-    return (
-      <div className="w-full min-h-screen flex justify-center items-center">
-        <div className="text-3xl font-semibold">Loading...</div>
-      </div>
-    );
+    return <SkeletonPage />;
   }
 
   const recomendation = data.data;
