@@ -45,6 +45,8 @@ const Navbar = ({ scrolled }) => {
       setKeyword(e.target.value);
       navigate(`books/search/${e.target.value}`);
     }
+
+    setSearch('');
   };
   return (
     <header
