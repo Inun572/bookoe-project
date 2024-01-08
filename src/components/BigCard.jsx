@@ -6,8 +6,12 @@ import Button from './common/Button';
 const BigCard = ({ title, author, description, rating, cover, id }) => {
   return (
     <div className="w-[564px] h-[346px] flex justify-center gap-4">
-      <div className="w-1/2 max-h-full object-cover rounded-lg">
-        <img src={cover} alt={title} className="w-full h-full rounded-lg" />
+      <div className="w-1/2 max-h-full rounded-lg">
+        <img
+          src={cover}
+          alt={title}
+          className="w-full h-full rounded-lg object-cover"
+        />
       </div>
       <div className="w-1/2 max-h-full flex flex-col justify-between">
         <h1 className="h-[80px] mb-4 text-2xl font-semibold line-clamp-2">

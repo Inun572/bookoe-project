@@ -44,9 +44,8 @@ const Navbar = ({ scrolled }) => {
     if (e.key === 'Enter') {
       setKeyword(e.target.value);
       navigate(`books/search/${e.target.value}`);
+      setSearch('');
     }
-
-    setSearch('');
   };
   return (
     <header

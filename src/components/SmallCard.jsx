@@ -11,7 +11,7 @@ const SmallCard = (props) => {
         <img
           src={image_url}
           alt={title}
-          className="w-full h-full rounded-lg object-fill"
+          className="w-full h-full rounded-lg object-cover"
         />
       </div>
       <h1 className="h-[70px] text-2xl font-semibold line-clamp-2">{title}</h1>
