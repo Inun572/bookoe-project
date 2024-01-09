@@ -1,8 +1,8 @@
-import { NavLink, useLocation, useNavigate } from 'react-router-dom';
-import Logo from './Logo';
 import PropTypes from 'prop-types';
+import { NavLink, useLocation, useNavigate } from 'react-router-dom';
 import { useSearch } from '../../store/search';
 import { useEffect, useState } from 'react';
+import Bookoe from '../../assets/logo.png';
 import Button from '../common/Button';
 
 const routes = [
@@ -53,7 +53,7 @@ const Navbar = ({ scrolled }) => {
         scrolled ? 'bg-white shadow-md' : ''
       }`}
     >
-      <Logo />
+      <img src={Bookoe} alt="Bookoe" />
       <nav className="flex justify-between items-center">
         <div className="min-w-[226px] flex justify-between items-center gap-6 text-xl">
           {routes.map((route, index) => (
