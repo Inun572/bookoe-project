@@ -4,6 +4,7 @@ import CardWithTag from '../../components/CardWithTag';
 import { dateFormatter } from '../../utils/formatter';
 import useGetData from '../../hooks/useGetData';
 import SkeletonPage from '../../components/skeletons/SkeletonPage';
+import { quickSort } from '../../utils/quickSort';
 
 const dateTag = (dateString) => {
   return (
@@ -13,10 +14,10 @@ const dateTag = (dateString) => {
   );
 };
 
+// 'https://bookapi.cm.hmw.lol/api/books?sort=created_at&direction=desc&page=1'
+
 const Index = () => {
-  const [url, setUrl] = useState(
-    'https://bookapi.cm.hmw.lol/api/books?sort=created_at&direction=desc&page=1'
-  );
+  const [url, setUrl] = useState('https://bookapi.cm.hmw.lol/api/books?page=2');
 
   const { data, error, isLoading } = useGetData(url);
 
@@ -32,7 +33,9 @@ const Index = () => {
     return <SkeletonPage />;
   }
 
-  const latest = data.data;
+  const latest = quickSort(data.data, 'created_at', 'desc');
+  // const latest = data.data;
+  console.log(latest);
   const totalPage = data.meta.last_page;
   const currentPage = data.meta.current_page;
   const pages = data.links;
